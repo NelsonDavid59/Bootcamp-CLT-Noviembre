@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using BootcampCLTNoviembre.Entities;
 using BootcampCLTNoviembre.Services;
 using BootcampCLTNoviembre.DTOs;
+using System.ComponentModel.DataAnnotations;
 
 namespace BootcampCLTNoviembre.Controllers
 {
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/products")]
+    [Route("api/[controller]")]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public class ProductsController : Controller
     {
@@ -42,7 +43,15 @@ namespace BootcampCLTNoviembre.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<ProductDTO> Create(ProductDTO product)
         {
-            
+            try
+            {
+                var savedProduct = _productService.Save(product);
+                return savedProduct;
+            }
+            catch(ValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

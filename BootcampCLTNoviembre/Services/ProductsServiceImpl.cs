@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using BootcampCLTNoviembre.DTOs;
 using BootcampCLTNoviembre.Entities;
 using BootcampCLTNoviembre.Persistence;
@@ -6,6 +7,8 @@ namespace BootcampCLTNoviembre.Services;
 
 public class ProductsServiceImpl : IProductService
 {
+    private static readonly decimal MAX_PRICE_VALUE = 999999999;
+
     //Simulación de productos
     private static readonly List<ProductEntity> Products =
         [
@@ -38,8 +41,18 @@ public class ProductsServiceImpl : IProductService
 
     public ProductDTO Save(ProductDTO product)
     {
-        // Validaciones
+        ValidateProductDTO(product); //Validamos antes de guardar
         
+        // Asignamos un ID
+        var newID = Products.Max(x => x.Id) + 1;
+        product.Id = newID;
+
+        // Convertimos a entity
+        var entity = parseDtoToEntity(product);
+        
+        Products.Add(entity);
+
+        return product;
     }
 
     public ProductDTO SetMinStockValue(int productId, int newValue)
@@ -58,7 +71,7 @@ public class ProductsServiceImpl : IProductService
     {
         ProductEntity entity = new()
         {
-            Id = dto.Id,
+            Id = (int)dto.Id,
             Name = dto.Name,
             Description = dto.Description,
             Price = dto.Price,
@@ -81,5 +94,24 @@ public class ProductsServiceImpl : IProductService
         }; 
 
         return  dto;
+    }
+
+    private void ValidateProductDTO(ProductDTO product)
+    {
+        // Validaciones
+        if (string.IsNullOrWhiteSpace(product.Description))
+        {
+            throw new ValidationException("Description required");
+        }
+
+        if (string.IsNullOrWhiteSpace(product.Name))
+        {
+            throw new ValidationException("Name required");
+        }
+
+        if (product.Price > MAX_PRICE_VALUE)
+        {
+            throw new ValidationException("Price is over the max value");
+        }
     }
 }
