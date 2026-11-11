@@ -6,8 +6,8 @@ public interface IProductService
 {
     public List<ProductDTO> GetAll();
     public ProductDTO? GetById(int id);
-    public ProductDTO Save();
-    public ProductDTO Update();
-    public ProductDTO SetMinStockValue();
-    public void Delete();
+    public ProductDTO Save(ProductDTO product);
+    public ProductDTO Update(ProductDTO product);
+    public ProductDTO SetMinStockValue(int productId, int newValue);
+    public void Delete(int productId);
 }
