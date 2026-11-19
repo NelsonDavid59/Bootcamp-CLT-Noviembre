@@ -13,6 +13,8 @@ public static class ExceptionMessages
         
         public static readonly string PriceNonNegative = 
             GenerateNonNegativeFieldMsg(nameof(ProductEntity.Price));
+
+        public static readonly string ProductNotFound = "The product with id {0} was not found.";
     }
 
     private static string GenerateRequiredFieldMsg(string fieldName)

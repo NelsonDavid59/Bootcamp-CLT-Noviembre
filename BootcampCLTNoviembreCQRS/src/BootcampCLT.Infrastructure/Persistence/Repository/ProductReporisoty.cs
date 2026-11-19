@@ -1,26 +1,30 @@
 using BootcampCLT.Domain.Products;
+using BootcampCLT.Domain.Shared.Exceptions;
+using BootcampCLT.Infrastructure.Persistence.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace BootcampCLT.Infrastructure.Persistence.Repository;
 
-public class ProductRepository : IProductRepository
+public class ProductRepository(AppDbContext db) : IProductRepository
 {
-    public Task<ICollection<ProductEntity>> GetAll()
+    public async Task<IReadOnlyList<ProductEntity>> GetAll()
     {
-        throw new NotImplementedException();
+        return await db.Products.AsNoTracking().ToListAsync();
     }
 
-    public Task<ProductEntity> GetById(int producId)
+    public async Task<ProductEntity> GetById(int producId)
     {
-        throw new NotImplementedException();
+        return await db.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == producId) 
+            ?? throw new NotFoundException(string.Format(ExceptionMessages.Products.ProductNotFound, producId)); 
     }
 
     public void Save(ProductEntity product)
     {
-        throw new NotImplementedException();
+        db.Products.Add(product);
     }
 
     public void Update(ProductEntity product)
     {
-        throw new NotImplementedException();
+        db.Products.Update(product);
     }
 }
