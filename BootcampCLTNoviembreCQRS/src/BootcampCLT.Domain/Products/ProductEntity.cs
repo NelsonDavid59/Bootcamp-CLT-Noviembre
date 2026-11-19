@@ -10,6 +10,13 @@ public sealed class ProductEntity : IEntity
     public string Description { get; private set; }
     public decimal Price { get; private set; }
     public int MinStock { get; private set; } //Stock mínimo para el producto
+    public DateTimeOffset CreatedAt { get; private set; }
+    public DateTimeOffset UpdatedAt { get; private set; }
+
+
+    public ProductEntity()
+    {
+    }
 
     public static ProductEntity Create(string name, string description, decimal price = 0, int minStock = 0)
     {
@@ -33,7 +40,8 @@ public sealed class ProductEntity : IEntity
             Name = name,
             Description = description,
             Price = price,
-            MinStock = minStock
+            MinStock = minStock,
+            CreatedAt = DateTime.UtcNow
         };
     }
 }
