@@ -1,4 +1,4 @@
-namespace BootcampCLT.Infrastructure.Persistence.Database;
+namespace BootcampCLT.Application.Common.Interfaces;
 
 public interface IUnitOfWork
 {

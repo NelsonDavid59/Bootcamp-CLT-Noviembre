@@ -1,5 +1,5 @@
-using BootcampCLT.Infrastructure.Persistence.Database;
-using Microsoft.EntityFrameworkCore;
+using BootcampCLT;
+using BootcampCLT.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,13 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+// Application
+builder.Services.AddApplication();
 
-// DbContext
-var connectionString = builder.Configuration
-    .GetConnectionString("DefaultConnection");
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(connectionString));
+// Infrastructure
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 

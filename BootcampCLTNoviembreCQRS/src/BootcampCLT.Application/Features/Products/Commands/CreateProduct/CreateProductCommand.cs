@@ -1,6 +1,11 @@
 using BootcampCLT.Application.Common.CQRS;
+using BootcampCLT.Application.Features.Products.DTOs;
 
-public sealed record CreateProductCommand() : ICommand
-{
-    
-}
+namespace BootcampCLT.Application.Features.Commands.CreateProduct;
+
+public sealed record CreateProductCommand(
+    string Name, 
+    string? Description,
+    decimal Price,
+    int MinStock
+) : ICommand<ProductResponse>;

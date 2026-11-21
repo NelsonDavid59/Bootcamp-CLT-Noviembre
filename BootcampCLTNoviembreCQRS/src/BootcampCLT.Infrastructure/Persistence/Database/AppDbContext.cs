@@ -1,3 +1,4 @@
+using BootcampCLT.Application.Common.Interfaces;
 using BootcampCLT.Domain.Products;
 using Microsoft.EntityFrameworkCore;
 

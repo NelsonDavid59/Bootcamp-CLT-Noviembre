@@ -7,7 +7,7 @@ public sealed class ProductEntity : IEntity
 {
     public int Id { get; private set; }
     public string Name { get; private set; }
-    public string Description { get; private set; }
+    public string? Description { get; private set; }
     public decimal Price { get; private set; }
     public int MinStock { get; private set; } //Stock mínimo para el producto
     public DateTimeOffset CreatedAt { get; private set; }
@@ -18,16 +18,11 @@ public sealed class ProductEntity : IEntity
     {
     }
 
-    public static ProductEntity Create(string name, string description, decimal price = 0, int minStock = 0)
+    public static ProductEntity Create(string name, string? description, decimal price = 0, int minStock = 0)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
             throw new ValidationException(ExceptionMessages.Products.NameRequired);
-        }
-
-        if (string.IsNullOrWhiteSpace(description))
-        {
-            throw new ValidationException(ExceptionMessages.Products.DescriptionRequired);
         }
 
         if(price < 0)
