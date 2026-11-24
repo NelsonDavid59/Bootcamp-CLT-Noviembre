@@ -7,5 +7,5 @@ public sealed record ProductResponse(
     decimal Price,
     int MinStock,
     DateTimeOffset CreatedAt,
-    DateTimeOffset UpdatedAt
+    DateTimeOffset? UpdatedAt
 );

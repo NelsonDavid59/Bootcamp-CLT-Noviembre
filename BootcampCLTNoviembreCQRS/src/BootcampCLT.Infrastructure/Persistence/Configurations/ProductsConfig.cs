@@ -21,22 +21,27 @@ public class ProductsConfig : IEntityTypeConfiguration<ProductEntity>
             .HasName("pk_products");
 
         builder.Property(p => p.Id)
+            .HasColumnName("id")
             .UseIdentityByDefaultColumn();
 
         builder.Property(p => p.Name)
+            .HasColumnName("name")
             .HasMaxLength(150)
             .IsRequired();
         
         builder.Property(p => p.Description)
+            .HasColumnName("description")
             .HasMaxLength(500)
             .IsRequired(false);
         
         builder.Property(p => p.Price)
+            .HasColumnName("price")
             .HasPrecision(18, 2)
             .HasComment("Precio unitario en USD.")
             .IsRequired();
 
         builder.Property(p => p.MinStock)
+            .HasColumnName("stock")
             .HasDefaultValue(0)
             .HasComment("Unidades disponibles en inventario.")
             .IsRequired();

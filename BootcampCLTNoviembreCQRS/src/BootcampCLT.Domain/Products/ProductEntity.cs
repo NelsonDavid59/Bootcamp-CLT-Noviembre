@@ -11,7 +11,7 @@ public sealed class ProductEntity : IEntity
     public decimal Price { get; private set; }
     public int MinStock { get; private set; } //Stock mínimo para el producto
     public DateTimeOffset CreatedAt { get; private set; }
-    public DateTimeOffset UpdatedAt { get; private set; }
+    public DateTimeOffset? UpdatedAt { get; private set; }
 
 
     public ProductEntity()
