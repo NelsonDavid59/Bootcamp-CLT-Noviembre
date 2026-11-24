@@ -20,6 +20,32 @@ public sealed class ProductEntity : IEntity
 
     public static ProductEntity Create(string name, string? description, decimal price = 0, int minStock = 0)
     {
+        ValidateProductFields(name, price);
+
+        return new ProductEntity
+        {
+            Name = name,
+            Description = description,
+            Price = price,
+            MinStock = minStock,
+            CreatedAt = DateTimeOffset.UtcNow
+        };
+    }
+
+    // Metodo de instancia: setea los valores del objeto
+    public void Update(string name, string? description, decimal price = 0, int minStock = 0)
+    {
+        ValidateProductFields(name, price);
+
+        Name = name;
+        Description = description;
+        Price = price;
+        MinStock = minStock;
+        UpdatedAt = DateTimeOffset.UtcNow;
+    }
+
+    public static void ValidateProductFields(string name, decimal price)
+    {
         if (string.IsNullOrWhiteSpace(name))
         {
             throw new ValidationException(ExceptionMessages.Products.NameRequired);
@@ -29,14 +55,5 @@ public sealed class ProductEntity : IEntity
         {
             throw new ValidationException(ExceptionMessages.Products.PriceNonNegative);
         }
-
-        return new ProductEntity
-        {
-            Name = name,
-            Description = description,
-            Price = price,
-            MinStock = minStock,
-            CreatedAt = DateTime.UtcNow
-        };
     }
 }

@@ -3,6 +3,8 @@ using BootcampCLT.Application.Features.Commands.CreateProduct;
 using BootcampCLT.Application.Features.Products.Queries.GetProducts;
 using BootcampCLT.Application.Features.Products.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using BootcampCLT.Application.Features.Products.Commands.UpdateProduct;
+using BootcampCLT.Api.Requests.Products;
 
 namespace BootcampCLT.Api.Endpoints.Products;
 
@@ -36,6 +38,25 @@ public static class ProductEndpoints
         })
         .WithName("CreateProduct");
 
+        group.MapPut("/{productId:int}", async (
+            int productId,
+            UpdateProductRequest request, 
+            ICommandDispatcher dispatcher,
+            CancellationToken cancellationToken) =>
+        {
+            // Creamos el comando
+            var command = new UpdateProductCommand(
+                productId, 
+                request.Name,
+                request.Description,
+                request.Price,
+                request.MinStock);
+            
+            var result = 
+                await dispatcher.Dispatch<UpdateProductCommand, ProductResponse>(command, cancellationToken);
+            
+            return Results.Ok(result);
+        }).WithName("UpdateProduct");
         
         return group;
     }
