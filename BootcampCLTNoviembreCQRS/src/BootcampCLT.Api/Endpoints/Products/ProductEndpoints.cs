@@ -19,7 +19,9 @@ public static class ProductEndpoints
         {
             var query = new GetProductQuery(productId);
 
-            var result = await dispatcher.Dispatch<GetProductQuery, ProductResponse>(query, cancellationToken);            
+            var result = await dispatcher.Dispatch<GetProductQuery, ProductResponse>(query, cancellationToken); 
+
+            return Results.Ok(result);           
         }).WithName("GetProductById");
 
         group.MapPost("/", async (
