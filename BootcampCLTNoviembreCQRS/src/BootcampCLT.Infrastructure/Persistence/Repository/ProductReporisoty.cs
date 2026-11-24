@@ -13,10 +13,10 @@ public class ProductRepository(AppDbContext db) : IProductRepository
         return await db.Products.AsNoTracking().ToListAsync(cancellationToken);
     }
 
-    public async Task<ProductEntity> GetById(int producId, CancellationToken cancellationToken)
+    public async Task<ProductEntity> GetById(int productId, CancellationToken cancellationToken)
     {
-        return await db.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == producId, cancellationToken) 
-            ?? throw new NotFoundException(string.Format(ExceptionMessages.Products.ProductNotFound, producId)); 
+        return await db.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == productId, cancellationToken) 
+            ?? throw new NotFoundException(string.Format(ExceptionMessages.Products.ProductNotFound, productId)); 
     }
 
     public void Save(ProductEntity product)
