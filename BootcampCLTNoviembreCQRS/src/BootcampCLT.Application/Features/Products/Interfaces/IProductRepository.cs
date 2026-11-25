@@ -6,7 +6,7 @@ public interface IProductRepository
 {
     public Task<ProductEntity> GetById(int producId, CancellationToken cancellationToken);
 
-    public Task<IReadOnlyList<ProductEntity>> GetAll(CancellationToken cancellationToken);
+    public Task<ICollection<ProductEntity>> GetAll(CancellationToken cancellationToken);
 
     public void Save(ProductEntity product);
 

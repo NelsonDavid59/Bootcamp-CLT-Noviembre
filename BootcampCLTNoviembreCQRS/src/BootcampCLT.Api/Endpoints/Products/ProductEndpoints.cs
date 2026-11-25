@@ -26,6 +26,16 @@ public static class ProductEndpoints
             return Results.Ok(result);           
         }).WithName("GetProductById");
 
+        group.MapGet("/", async (
+            IQueryDispatcher dispatcher,
+            CancellationToken cancellationToken) =>
+        {
+            var result = 
+                await dispatcher.Dispatch<GetProductsQuery, ICollection<ProductResponse>>(new GetProductsQuery(), cancellationToken);
+
+            return Results.Ok(result);
+        });
+
         group.MapPost("/", async (
             CreateProductCommand command,
             ICommandDispatcher dispatcher,
@@ -57,6 +67,8 @@ public static class ProductEndpoints
             
             return Results.Ok(result);
         }).WithName("UpdateProduct");
+
+        
         
         return group;
     }

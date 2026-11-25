@@ -8,7 +8,7 @@ namespace BootcampCLT.Infrastructure.Persistence.Repository;
 
 public class ProductRepository(AppDbContext db) : IProductRepository
 {
-    public async Task<IReadOnlyList<ProductEntity>> GetAll(CancellationToken cancellationToken)
+    public async Task<ICollection<ProductEntity>> GetAll(CancellationToken cancellationToken)
     {
         return await db.Products.AsNoTracking().ToListAsync(cancellationToken);
     }
