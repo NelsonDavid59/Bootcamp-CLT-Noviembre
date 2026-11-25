@@ -32,18 +32,6 @@ public sealed class ProductEntity : IEntity
         };
     }
 
-    // Metodo de instancia: setea los valores del objeto
-    public void Update(string name, string? description, decimal price = 0, int minStock = 0)
-    {
-        ValidateProductFields(name, price);
-
-        Name = name;
-        Description = description;
-        Price = price;
-        MinStock = minStock;
-        UpdatedAt = DateTimeOffset.UtcNow;
-    }
-
     public static void ValidateProductFields(string name, decimal price)
     {
         if (string.IsNullOrWhiteSpace(name))
@@ -55,5 +43,22 @@ public sealed class ProductEntity : IEntity
         {
             throw new ValidationException(ExceptionMessages.Products.PriceNonNegative);
         }
+    }
+
+    // Métodos de instancia
+    public void Update(string name, string? description, decimal price = 0, int minStock = 0)
+    {
+        ValidateProductFields(name, price);
+
+        Name = name;
+        Description = description;
+        Price = price;
+        MinStock = minStock;
+        UpdatedAt = DateTimeOffset.UtcNow;
+    }
+
+    public void UpdateMinStock(int newQuantity)
+    {
+        MinStock = newQuantity;
     }
 }
